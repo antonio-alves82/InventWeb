@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="sidebar">
+  <a href="home.html">🏠 Home</a>
+</div>
+
+<div class="content">
+  <h2>📊 Dashboard</h2>
+
+  <div class="cards">
+    <div class="card" id="itens">Itens: 0</div>
+    <div class="card" id="qtd">Quantidade: 0</div>
+  </div>
+</div>
+
+<script src="js/dashboard.js"></script>
+</body>
+</html>
