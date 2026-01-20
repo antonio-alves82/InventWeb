@@ -1,76 +1,165 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Cadastro de Inventário</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventário</title>
+
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      padding: 20px;
+      display: flex;
+      min-height: 100vh;
+      background: #f5f6fa;
     }
-    form {
-      background: #fff;
+
+    /* MENU LATERAL */
+    .sidebar {
+      width: 240px;
+      background: #1f2937;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
       padding: 20px;
-      max-width: 400px;
-      margin: auto;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      position: fixed;
+      height: 100vh;
+      left: 0;
+      top: 0;
     }
-    input, button {
-      width: 100%;
-      padding: 8px;
+
+    .sidebar h2 {
+      font-size: 22px;
+      margin-bottom: 20px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 15px;
+    }
+
+    .menu {
+      list-style: none;
       margin-top: 10px;
     }
-    button {
-      background: #2e7d32;
+
+    .menu li {
+      margin: 10px 0;
+    }
+
+    .menu a {
+      display: block;
+      padding: 12px 12px;
+      text-decoration: none;
       color: #fff;
-      border: none;
-      cursor: pointer;
+      border-radius: 8px;
+      transition: 0.2s;
+      font-size: 16px;
+    }
+
+    .menu a:hover {
+      background: #374151;
+    }
+
+    .menu a.active {
+      background: #2563eb;
+    }
+
+    /* CONTEÚDO */
+    .content {
+      margin-left: 240px;
+      padding: 25px;
+      width: calc(100% - 240px);
+    }
+
+    .header {
+      background: #fff;
+      padding: 18px 20px;
+      border-radius: 12px;
+      box-shadow: 0px 2px 10px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      font-size: 26px;
+      color: #111827;
+    }
+
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0px 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .card h3 {
+      color: #111827;
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .card p {
+      color: #4b5563;
+      line-height: 1.5;
+    }
+
+    /* RESPONSIVO */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 200px;
+      }
+      .content {
+        margin-left: 200px;
+        width: calc(100% - 200px);
+      }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        flex-direction: column;
+      }
+      .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+      }
+      .content {
+        margin-left: 0;
+        width: 100%;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<h2>📦 Cadastro de Inventário</h2>
+  <!-- MENU LATERAL -->
+  <aside class="sidebar">
+    <h2>Inventário</h2>
+    <ul class="menu">
+      <li><a class="active" href="cadastro.html">Cadastro</a></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="relatorio.html">Relatório</a></li>
+    </ul>
+  </aside>
 
-<form id="inventarioForm">
-  <input type="text" placeholder="Código" id="codigo" required>
-  <input type="text" placeholder="Produto" id="produto" required>
-  <input type="text" placeholder="Categoria" id="categoria">
-  <input type="number" placeholder="Quantidade" id="quantidade" required>
-  <input type="text" placeholder="Local" id="local">
-  <input type="text" placeholder="Observação" id="observacao">
-  <button type="submit">Salvar</button>
-</form>
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="content">
+    <div class="header">
+      <h1>Inventário</h1>
+    </div>
 
-<script>
-const url = "https://script.google.com/macros/s/AKfycbzLNj9P3V-ykE0wp_5lZFggra_51xmEOZIxererZB78f3dawLv3EP_tv_th-15sbYVHfA/exec";
-
-document.getElementById("inventarioForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-
-  const dados = {
-    codigo: codigo.value,
-    produto: produto.value,
-    categoria: categoria.value,
-    quantidade: quantidade.value,
-    local: local.value,
-    observacao: observacao.value
-  };
-
-  fetch(url, {
-    method: "POST",
-    body: JSON.stringify(dados)
-  })
-  .then(res => res.json())
-  .then(() => {
-    alert("✅ Inventário salvo com sucesso!");
-    document.getElementById("inventarioForm").reset();
-  })
-  .catch(() => alert("❌ Erro ao salvar"));
-});
-</script>
+    <div class="card">
+      <h3>Bem-vindo!</h3>
+      <p>
+        Este é o sistema de Inventário. Use o menu lateral para navegar entre
+        Cadastro, Dashboard e Relatório.
+      </p>
+    </div>
+  </main>
 
 </body>
 </html>
