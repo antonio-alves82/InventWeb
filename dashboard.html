@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Inventário</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      background: #f5f6fa;
+    }
+
+    /* MENU LATERAL */
+    .sidebar {
+      width: 240px;
+      background: #1f2937;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      position: fixed;
+      height: 100vh;
+      left: 0;
+      top: 0;
+    }
+
+    .sidebar h2 {
+      font-size: 22px;
+      margin-bottom: 20px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 15px;
+    }
+
+    .menu { list-style: none; margin-top: 10px; }
+    .menu li { margin: 10px 0; }
+    .menu a {
+      display: block;
+      padding: 12px;
+      text-decoration: none;
+      color: #fff;
+      border-radius: 8px;
+      transition: 0.2s;
+      font-size: 16px;
+    }
+    .menu a:hover { background: #374151; }
+    .menu a.active { background: #2563eb; }
+
+    /* CONTEÚDO */
+    .content {
+      margin-left: 240px;
+      padding: 25px;
+      width: calc(100% - 240px);
+    }
+
+    .header {
+      background: #fff;
+      padding: 18px 20px;
+      border-radius: 12px;
+      box-shadow: 0px 2px 10px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .header h1 {
+      font-size: 26px;
+      color: #111827;
+    }
+
+    .btn {
+      border: none;
+      background: #2563eb;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.2s;
+    }
+    .btn:hover { filter: brightness(0.95); }
+
+    /* KPI CARDS */
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .kpi {
+      background: #fff;
+      padding: 18px;
+      border-radius: 14px;
+      box-shadow: 0px 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .kpi h4 {
+      color: #6b7280;
+      font-weight: 600;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .kpi .value {
+      font-size: 28px;
+      font-weight: 800;
+      color: #111827;
+    }
+
+    /* TABELA */
+    .table-card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0px 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .table-card h3 {
+      margin-bottom: 12px;
+      color: #111827;
+      font-size: 18px;
+    }
+
+    .search {
+      width: 100%;
+      max-width: 420px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      outline: none;
+      margin: 10px 0 14px 0;
+      font-size: 14px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 700px;
+    }
+
+    th, td {
+      padding: 12px 10px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 14px;
+    }
+
+    th {
+      background: #f9fafb;
+      color: #111827;
+      font-weight: 700;
+    }
+
+    td {
+      color: #374151;
+    }
+
+    .status {
+      margin-top: 12px;
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    /* RESPONSIVO */
+    @media (max-width: 1000px) {
+      .kpis { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar { width: 200px; }
+      .content { margin-left: 200px; width: calc(100% - 200px); }
+    }
+
+    @media (max-width: 600px) {
+      body { flex-direction: column; }
+      .sidebar { position: relative; width: 100%; height: auto; }
+      .content { margin-left: 0; width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- MENU LATERAL -->
+  <aside class="sidebar">
+    <h2>Inventário</h2>
+    <ul class="menu">
+      <li><a href="cadastro.html">Cadastro</a></li>
+      <li><a class="active" href="dashboard.html">Dashboard</a></li>
+      <li><a href="relatorio.html">Relatório</a></li>
+    </ul>
+  </aside>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="content">
+    <div class="header">
+      <h1>Dashboard</h1>
+      <button class="btn" onclick="loadData()">Atualizar dados</button>
+    </div>
+
+    <!-- KPIs -->
+    <section class="kpis">
+      <div class="kpi">
+        <h4>Produtos cadastrados</h4>
+        <div class="value" id="kpiProdutos">0</div>
+      </div>
+
+      <div class="kpi">
+        <h4>Total em estoque</h4>
+        <div class="value" id="kpiEstoque">0</div>
+      </div>
+
+      <div class="kpi">
+        <h4>Valor total do estoque</h4>
+        <div class="value" id="kpiValor">R$ 0,00</div>
+      </div>
+    </section>
+
+    <!-- Tabela -->
+    <section class="table-card">
+      <h3>Lista de Produtos</h3>
+      <input class="search" id="search" placeholder="Pesquisar por nome/categoria..." oninput="renderTable()" />
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Produto</th>
+              <th>Categoria</th>
+              <th>Quantidade</th>
+              <th>Preço (R$)</th>
+              <th>Total (R$)</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <!-- preenchido via JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="status" id="status">Carregando dados...</div>
+    </section>
+  </main>
+
+  <script>
+    // ✅ COLE AQUI SEU LINK CSV PUBLICADO
+    const SHEET_CSV_URL = "COLE_AQUI_SEU_LINK_CSV";
+
+    // dados em memória
+    let products = [];
+
+    function parseCSV(csvText) {
+      // CSV simples (se tiver muitos campos com vírgulas dentro, podemos melhorar)
+      const lines = csvText.trim().split("\n").map(l => l.trim());
+      const headers = lines[0].split(",").map(h => h.replaceAll('"','').trim());
+
+      const rows = [];
+      for (let i = 1; i < lines.length; i++) {
+        const values = lines[i].split(",").map(v => v.replaceAll('"','').trim());
+        const obj = {};
+        headers.forEach((h, idx) => obj[h] = values[idx] ?? "");
+        rows.push(obj);
+      }
+      return rows;
+    }
+
+    function toNumber(value) {
+      if (!value) return 0;
+      // aceita: "10", "10,5", "R$ 10,50"
+      value = value.toString().replace("R$", "").trim();
+      value = value.replaceAll(".", "").replace(",", ".");
+      const n = Number(value);
+      return isNaN(n) ? 0 : n;
+    }
+
+    function formatBRL(value) {
+      return value.toLocaleString(
